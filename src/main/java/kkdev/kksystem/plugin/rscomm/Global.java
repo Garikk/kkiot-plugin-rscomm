@@ -3,12 +3,14 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package kkdev.kksystem.plugin.kkcar.plugin.rsCOMM.adapters;
+package kkdev.kksystem.plugin.rscomm;
+
+import kkdev.kksystem.plugin.rscomm.manager.RSManager;
 
 /**
  *
- * @author sayma_000
+ * @author blinov_is
  */
-class RSManager {
-    
+public abstract class Global {
+    public static RSManager PM;
 }

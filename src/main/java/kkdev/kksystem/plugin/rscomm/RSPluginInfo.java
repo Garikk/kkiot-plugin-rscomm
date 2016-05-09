@@ -1,4 +1,4 @@
-package kkdev.kksystem.plugin.kkcar.plugin.rsCOMM;
+package kkdev.kksystem.plugin.rscomm;
 
 /*
  * To change this license header, choose License Headers in Project Properties.

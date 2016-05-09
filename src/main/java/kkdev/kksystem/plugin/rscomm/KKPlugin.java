@@ -1,4 +1,4 @@
-package kkdev.kksystem.plugin.kkcar.plugin.rsCOMM;
+package kkdev.kksystem.plugin.rscomm;
 
 /*
  * To change this license header, choose License Headers in Project Properties.
@@ -8,8 +8,10 @@ package kkdev.kksystem.plugin.kkcar.plugin.rsCOMM;
 import kkdev.kksystem.base.classes.plugins.PluginMessage;
 import kkdev.kksystem.base.classes.plugins.simple.KKPluginBase;
 import kkdev.kksystem.base.interfaces.IPluginBaseInterface;
-import kkdev.kksystem.plugin.kkcar.plugin.rscomm.configuration.PluginSettings;
-import kkdev.kksystem.plugin.kkcar.plugin.rscomm.manager.RSManager;
+import kkdev.kksystem.plugin.rscomm.RSPluginInfo;
+import kkdev.kksystem.plugin.rscomm.Global;
+import kkdev.kksystem.plugin.rscomm.configuration.PluginSettings;
+import kkdev.kksystem.plugin.rscomm.manager.RSManager;
 
 
 /**

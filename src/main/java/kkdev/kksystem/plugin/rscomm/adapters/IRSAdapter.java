@@ -3,9 +3,10 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package kkdev.kksystem.plugin.kkcar.plugin.rsCOMM.adapters;
+package kkdev.kksystem.plugin.rscomm.adapters;
 
-import kkdev.kksystem.plugin.kkcar.plugin.rscomm.configuration.ServicesConfig;
+import kkdev.kksystem.plugin.rscomm.configuration.ServicesConfig;
+import kkdev.kksystem.plugin.rscomm.manager.RSManager;
 
 
 

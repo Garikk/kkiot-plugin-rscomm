@@ -1,20 +1,18 @@
-package kkdev.kksystem.plugin.kkcar.plugin.rscomm.manager;
+package kkdev.kksystem.plugin.rscomm.manager;
 
 import kkdev.kksystem.base.classes.base.PinBaseData;
 import kkdev.kksystem.base.classes.base.PinBaseDataTaggedObj;
-import kkdev.kksystem.base.classes.controls.PinControlData;
 import kkdev.kksystem.base.classes.plugins.PluginMessage;
 import kkdev.kksystem.base.classes.plugins.simple.managers.PluginManagerBase;
 import kkdev.kksystem.base.constants.PluginConsts;
 import static kkdev.kksystem.base.constants.PluginConsts.KK_PLUGIN_BASE_BASIC_TAGGEDOBJ_DATA;
-import static kkdev.kksystem.base.constants.PluginConsts.KK_PLUGIN_BASE_CONTROL_DATA;
 import kkdev.kksystem.base.constants.SystemConsts;
-import kkdev.kksystem.plugin.kkcar.plugin.rsCOMM.KKPlugin;
-import kkdev.kksystem.plugin.kkcar.plugin.rsCOMM.adapters.IRSAdapter;
-import kkdev.kksystem.plugin.kkcar.plugin.rsCOMM.adapters.rs232.RS232;
-import kkdev.kksystem.plugin.kkcar.plugin.rscomm.configuration.PluginSettings;
-import kkdev.kksystem.plugin.kkcar.plugin.rscomm.configuration.RSConfig;
-import kkdev.kksystem.plugin.kkcar.plugin.rscomm.configuration.ServicesConfig;
+import kkdev.kksystem.plugin.rscomm.configuration.PluginSettings;
+import kkdev.kksystem.plugin.rscomm.KKPlugin;
+import kkdev.kksystem.plugin.rscomm.adapters.IRSAdapter;
+import kkdev.kksystem.plugin.rscomm.adapters.rs232.RS232;
+import kkdev.kksystem.plugin.rscomm.configuration.RSConfig;
+import kkdev.kksystem.plugin.rscomm.configuration.ServicesConfig;
 
 public class RSManager extends PluginManagerBase {
 
@@ -30,17 +28,17 @@ public class RSManager extends PluginManagerBase {
         //
     }
     public void Start() {
-       
+        Adapter.StartAdapter(this);
     }
     private void ConfigAndInitHW() {
         //Init HW adapter
-        if (PluginSettings.MainConfiguration.BTAdapter == RSConfig.AdapterTypes.UniLinuxRS232) {
+        if (PluginSettings.MainConfiguration.BTAdapter == RSConfig.AdapterTypes.jsscRS232) {
             Adapter = new RS232();
             //Set up services
             for (ServicesConfig SVC : PluginSettings.MainConfiguration.RSServicesMapping) {
                 Adapter.RegisterService(SVC);
             }
-            Adapter.StartAdapter(this);
+            //Adapter.StartAdapter(this);
         }
     }
     

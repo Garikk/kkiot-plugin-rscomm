@@ -3,7 +3,7 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package kkdev.kksystem.plugin.kkcar.plugin.rscomm.configuration;
+package kkdev.kksystem.plugin.rscomm.configuration;
 
 /**
  *

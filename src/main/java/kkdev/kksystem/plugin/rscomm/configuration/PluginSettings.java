@@ -3,7 +3,7 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package kkdev.kksystem.plugin.kkcar.plugin.rscomm.configuration;
+package kkdev.kksystem.plugin.rscomm.configuration;
 
 import kkdev.kksystem.base.classes.plugins.simple.SettingsManager;
 
@@ -16,6 +16,8 @@ public abstract class PluginSettings {
    public static  String RS_CONF;
    private static SettingsManager Settings;
 
+   public String FeatureID;
+   
     public static RSConfig MainConfiguration;
 
     public static void InitConfig(String GlobalConfigUID, String MyUID) {

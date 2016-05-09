@@ -3,7 +3,7 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package kkdev.kksystem.plugin.kkcar.plugin.rscomm.configuration;
+package kkdev.kksystem.plugin.rscomm.configuration;
 
 import kkdev.kksystem.base.classes.plugins.ExternalConfiguration;
 import kkdev.kksystem.base.constants.SystemConsts;
@@ -14,9 +14,10 @@ import kkdev.kksystem.base.constants.SystemConsts;
  */
 public class RSConfig  extends ExternalConfiguration {
     public enum AdapterTypes {
-        UniLinuxRS232
+        jsscRS232
     }
     
+    public String FeatureID;
     public AdapterTypes BTAdapter;
     public ServicesConfig[] RSServicesMapping;
 
