@@ -37,7 +37,7 @@
                         </manifest>
                         <manifestEntries>
                             <kksystem-connector>
-                                kkdev.kksystem.plugin.KKPlugin
+                                kkdev.kksystem.plugin.rscomm.KKPlugin
                             </kksystem-connector>
                         </manifestEntries>
                     </archive>

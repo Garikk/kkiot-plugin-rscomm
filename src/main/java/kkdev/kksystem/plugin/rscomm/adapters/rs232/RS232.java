@@ -19,7 +19,6 @@ import kkdev.kksystem.plugin.rscomm.adapters.IRSAdapter;
 import kkdev.kksystem.plugin.rscomm.services.IBTService;
 import kkdev.kksystem.plugin.rscomm.configuration.ServicesConfig;
 
-
 /**
  *
  * @author sayma_000
@@ -27,31 +26,30 @@ import kkdev.kksystem.plugin.rscomm.configuration.ServicesConfig;
 public class RS232 implements IRSAdapter {
 
     private static SerialPort serialPort;
-    
+
     private boolean State = false;
     private List<Thread> BTServer;
 
     private List<ServicesConfig> ServicesMapping;
     private HashMap<String, IBTService> BTServices;
-      RSManager BTM;
+    RSManager BTM;
 
-   
     @Override
     public void RegisterService(ServicesConfig SC) {
-        if (ServicesMapping==null)
-            ServicesMapping=new ArrayList<>();
-            
+        if (ServicesMapping == null) {
+            ServicesMapping = new ArrayList<>();
+        }
+
         ServicesMapping.add(SC);
     }
 
     private void InitServices() {
-       
+
         for (ServicesConfig SC : ServicesMapping) {
             System.out.println("[BT][INF] Check services " + SC.Name);
-           
-           
-            }
+
         }
+    }
 
     @Override
     public void StopAdaper() {
@@ -60,13 +58,26 @@ public class RS232 implements IRSAdapter {
 
     @Override
     public void StartAdapter(RSManager RTM) {
+        serialPort = new SerialPort("//dev//ttyACM0");
+
+        try {
+            serialPort.openPort();
+            serialPort.setParams(SerialPort.BAUDRATE_9600,
+                    SerialPort.DATABITS_8,
+                    SerialPort.STOPBITS_1,
+                    SerialPort.PARITY_NONE);
+            serialPort.setFlowControlMode(SerialPort.FLOWCONTROL_RTSCTS_IN
+                    | SerialPort.FLOWCONTROL_RTSCTS_OUT);
+        } catch (SerialPortException ex) {
+            Logger.getLogger(RS232.class.getName()).log(Level.SEVERE, null, ex);
+        }
 
         try {
             serialPort.addEventListener(new PortReader(), SerialPort.MASK_RXCHAR);
         } catch (SerialPortException ex) {
             Logger.getLogger(RS232.class.getName()).log(Level.SEVERE, null, ex);
         }
-     
+
     }
 
     @Override
@@ -98,24 +109,19 @@ public class RS232 implements IRSAdapter {
             Logger.getLogger(RS232.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
-    
-    
-    
-       private static class PortReader implements SerialPortEventListener {
+
+    private static class PortReader implements SerialPortEventListener {
 
         public void serialEvent(SerialPortEvent event) {
-            if(event.isRXCHAR() && event.getEventValue() == 8){
-                if(event.isRXCHAR() && event.getEventValue() > 0){
+                if (event.isRXCHAR() && event.getEventValue() > 0) {
                     try {
                         //Получаем ответ от устройства, обрабатываем данные и т.д.
                         String data = serialPort.readString(event.getEventValue());
                         //И снова отправляем запрос
-                       System.out.println("RSCOMM " + data);
-                    }
-                    catch (SerialPortException ex) {
+                       
+                    } catch (SerialPortException ex) {
                         System.out.println(ex);
                     }
-                }
             }
         }
     }
