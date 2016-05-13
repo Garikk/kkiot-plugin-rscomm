@@ -34,8 +34,15 @@ public class RS232 implements IRSAdapter {
     private HashMap<String, IBTService> BTServices;
     RSManager BTM;
 
+    public RS232(RSManager RS)
+    {
+        BTM=RS;
+    }
+   
+    
     @Override
     public void RegisterService(ServicesConfig SC) {
+        
         if (ServicesMapping == null) {
             ServicesMapping = new ArrayList<>();
         }
@@ -45,10 +52,10 @@ public class RS232 implements IRSAdapter {
 
     private void InitServices() {
 
-        for (ServicesConfig SC : ServicesMapping) {
-            System.out.println("[BT][INF] Check services " + SC.Name);
+     //   for (ServicesConfig SC : ServicesMapping) {
+     //       System.out.println("[BT][INF] Check services " + SC.Name);
 
-        }
+      //  }
     }
 
     @Override
@@ -68,14 +75,18 @@ public class RS232 implements IRSAdapter {
                     SerialPort.PARITY_NONE);
             serialPort.setFlowControlMode(SerialPort.FLOWCONTROL_RTSCTS_IN
                     | SerialPort.FLOWCONTROL_RTSCTS_OUT);
+            State = true;
         } catch (SerialPortException ex) {
             Logger.getLogger(RS232.class.getName()).log(Level.SEVERE, null, ex);
+              State = false;
         }
 
         try {
             serialPort.addEventListener(new PortReader(), SerialPort.MASK_RXCHAR);
+            State = true;
         } catch (SerialPortException ex) {
             Logger.getLogger(RS232.class.getName()).log(Level.SEVERE, null, ex);
+               State = false;
         }
 
     }
@@ -95,6 +106,7 @@ public class RS232 implements IRSAdapter {
             serialPort.writeString(Json);
         } catch (SerialPortException ex) {
             Logger.getLogger(RS232.class.getName()).log(Level.SEVERE, null, ex);
+             State=false;
         }
     }
 
@@ -104,24 +116,45 @@ public class RS232 implements IRSAdapter {
             return;
         }
         try {
+          //  System.out.print(Data);
+           // System.out.print("\r\n");
             serialPort.writeString(Data);
+            serialPort.writeString("\r\n");
         } catch (SerialPortException ex) {
             Logger.getLogger(RS232.class.getName()).log(Level.SEVERE, null, ex);
+            State=false;
         }
     }
 
-    private static class PortReader implements SerialPortEventListener {
+    private class PortReader implements SerialPortEventListener {
+        private String message;
+        PortReader()
+        {
+            message="";
+        }
 
         public void serialEvent(SerialPortEvent event) {
-                if (event.isRXCHAR() && event.getEventValue() > 0) {
-                    try {
-                        //Получаем ответ от устройства, обрабатываем данные и т.д.
-                        String data = serialPort.readString(event.getEventValue());
-                        //И снова отправляем запрос
-                       
-                    } catch (SerialPortException ex) {
-                        System.out.println(ex);
+            if (event.isRXCHAR() && event.getEventValue() > 0) {
+                try {
+                    String buffer = serialPort.readString();
+                    String S;
+
+                    for (int i = 0; i < buffer.length(); i++) {
+                        S = buffer.substring(i, i + 1);
+                        if (S.equals("\r")) {
+                             BTM.RS_ReceiveData("SMARTHEAD", message);
+                            message = "";
+                        } else if (!S.equals("\n")) {
+                            message += S;
+                          }
                     }
+
+
+                    
+
+                } catch (SerialPortException ex) {
+                    System.out.println(ex);
+                }
             }
         }
     }

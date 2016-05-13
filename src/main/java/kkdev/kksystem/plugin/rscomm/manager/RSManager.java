@@ -33,7 +33,7 @@ public class RSManager extends PluginManagerBase {
     private void ConfigAndInitHW() {
         //Init HW adapter
         if (PluginSettings.MainConfiguration.BTAdapter == RSConfig.AdapterTypes.jsscRS232) {
-            Adapter = new RS232();
+            Adapter = new RS232(this);
             //Set up services
             for (ServicesConfig SVC : PluginSettings.MainConfiguration.RSServicesMapping) {
                 Adapter.RegisterService(SVC);
@@ -45,7 +45,7 @@ public class RSManager extends PluginManagerBase {
    
     
     
-    public void BT_ReceiveData(String Tag, String Data)
+    public void RS_ReceiveData(String Tag, String Data)
     {
         PinBaseDataTaggedObj ObjDat;
         ObjDat=new PinBaseDataTaggedObj();
@@ -56,15 +56,15 @@ public class RSManager extends PluginManagerBase {
         this.BASE_SendPluginMessage(SystemConsts.KK_BASE_FEATURES_SYSTEM_MULTIFEATURE_UID,PluginConsts.KK_PLUGIN_BASE_BASIC_TAGGEDOBJ_DATA,ObjDat);
     }
     
-    public void ReceivePIN(PluginMessage Msg)
-    {
-        if (Msg.PinName.equals(KK_PLUGIN_BASE_BASIC_TAGGEDOBJ_DATA))
-        {
-            PinBaseDataTaggedObj PIN=(PinBaseDataTaggedObj)Msg.PinData;
-            //Adapter.SendJsonData(PIN.Tag,(String)PIN.Value);
-            Adapter.SendStringData(PIN.Tag,(String)PIN.Value);
+    public void ReceivePIN(PluginMessage Msg) {
+        if (Msg.PinName.equals(KK_PLUGIN_BASE_BASIC_TAGGEDOBJ_DATA)) {
+            PinBaseDataTaggedObj PIN = (PinBaseDataTaggedObj) Msg.PinData;
+            //
+            if (!PIN.Tag.equals("SMARTHEAD"))
+                return;
+            //
+            Adapter.SendStringData(PIN.Tag, (String) PIN.Value);
         }
     }
-    
 
 }

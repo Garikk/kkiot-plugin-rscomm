@@ -33,25 +33,22 @@ public class RSPluginInfo  implements IPluginInfoRequest {
     }
     
     
-    private String[] GetMyReceivePinInfo(){
-    
-        String[] Ret=new String[1];
-    
+    private String[] GetMyReceivePinInfo() {
 
-        Ret[0]=PluginConsts.KK_PLUGIN_BASE_PIN_COMMAND;
+        String[] Ret = new String[2];
 
-        
+        Ret[0] = PluginConsts.KK_PLUGIN_BASE_PIN_COMMAND;
+        Ret[1] = PluginConsts.KK_PLUGIN_BASE_BASIC_TAGGEDOBJ_DATA;
+
         return Ret;
     }
-    private String[] GetMyTransmitPinInfo(){
-    
-        String[] Ret=new String[1];
+
+    private String[] GetMyTransmitPinInfo() {
+
+        String[] Ret = new String[1];
         Ret[0] = PluginConsts.KK_PLUGIN_BASE_BASIC_TAGGEDOBJ_DATA;
 
-
-
-        
         return Ret;
     }
-    
+
 }
