@@ -116,8 +116,8 @@ public class RS232 implements IRSAdapter {
             return;
         }
         try {
-          //  System.out.print(Data);
-           // System.out.print("\r\n");
+           // System.out.print(Data);
+            //System.out.print("\r\n");
             serialPort.writeString(Data);
             serialPort.writeString("\r\n");
         } catch (SerialPortException ex) {
