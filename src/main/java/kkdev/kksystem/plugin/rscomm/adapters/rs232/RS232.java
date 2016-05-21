@@ -77,8 +77,9 @@ public class RS232 implements IRSAdapter {
                     | SerialPort.FLOWCONTROL_RTSCTS_OUT);
             State = true;
         } catch (SerialPortException ex) {
-            Logger.getLogger(RS232.class.getName()).log(Level.SEVERE, null, ex);
+            System.out.println("[RSCOMM][ERR] Adapter RS-232 not found, Disabled");
               State = false;
+              return;
         }
 
         try {
