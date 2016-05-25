@@ -14,6 +14,8 @@ import jssc.SerialPort;
 import jssc.SerialPortEvent;
 import jssc.SerialPortEventListener;
 import jssc.SerialPortException;
+import kkdev.kksystem.base.classes.kkcontroller.KKController_Utils;
+import kkdev.kksystem.base.classes.kkcontroller.KKController_Utils.RS232Device;
 import kkdev.kksystem.plugin.rscomm.manager.RSManager;
 import kkdev.kksystem.plugin.rscomm.adapters.IRSAdapter;
 import kkdev.kksystem.plugin.rscomm.services.IBTService;
@@ -25,6 +27,8 @@ import kkdev.kksystem.plugin.rscomm.configuration.ServicesConfig;
  */
 public class RS232 implements IRSAdapter {
 
+    String HWPort;
+    
     private static SerialPort serialPort;
 
     private boolean State = false;
@@ -34,9 +38,10 @@ public class RS232 implements IRSAdapter {
     private HashMap<String, IBTService> BTServices;
     RSManager BTM;
 
-    public RS232(RSManager RS)
+    public RS232(RSManager RS, String Port)
     {
         BTM=RS;
+        HWPort=Port;
     }
    
     
@@ -65,7 +70,31 @@ public class RS232 implements IRSAdapter {
 
     @Override
     public void StartAdapter(RSManager RTM) {
-        serialPort = new SerialPort("//dev//ttyACM0");
+        String DevAddr="AUTO";
+        if (HWPort.equals("AUTO"))
+        for (RS232Device DV: RTM.BaseConnector.SystemUtilities().HWDEVICES_GetRS232Devices())
+        {
+            if (DV.PortType==KKController_Utils.RS232DevType.DevSmarthead)
+            {
+                DevAddr=DV.PortName;
+                break;
+            }
+        }
+        else
+        {
+            DevAddr=HWPort;
+        }
+        
+        
+        if (DevAddr.equals("AUTO"))
+        {
+               System.out.println("[RSCOMM][ERR] Adapter RS-232 not found, Disabled");
+              State = false;
+              return;
+        }
+            
+        
+        serialPort = new SerialPort(DevAddr);
 
         try {
             serialPort.openPort();

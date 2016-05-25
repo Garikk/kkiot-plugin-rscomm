@@ -33,7 +33,8 @@ public class RSManager extends PluginManagerBase {
     private void ConfigAndInitHW() {
         //Init HW adapter
         if (PluginSettings.MainConfiguration.BTAdapter == RSConfig.AdapterTypes.jsscRS232) {
-            Adapter = new RS232(this);
+            //TODO TEMPORARY!!!
+            Adapter = new RS232(this, PluginSettings.MainConfiguration.RSServicesMapping[0].DevAddr);
             //Set up services
             for (ServicesConfig SVC : PluginSettings.MainConfiguration.RSServicesMapping) {
                 Adapter.RegisterService(SVC);

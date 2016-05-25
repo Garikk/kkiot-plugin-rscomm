@@ -23,7 +23,7 @@ public abstract class kk_DefaultConfig {
         DefConf.RSServicesMapping[0]=new ServicesConfig();
         DefConf.RSServicesMapping[0].DevType=ServicesConfig.RS_ServiceType.RS232Port;
         DefConf.RSServicesMapping[0].KK_TargetTag="SMARTHEAD";
-        DefConf.RSServicesMapping[0].DevAddr="//dev//ttyACM0"; //change this! (this is my test adapter
+        DefConf.RSServicesMapping[0].DevAddr="AUTO";//"//dev//ttyACM0"; //change this! (this is my test adapter
         DefConf.RSServicesMapping[0].Name="SMARTHEAD";
         return DefConf;
     }
