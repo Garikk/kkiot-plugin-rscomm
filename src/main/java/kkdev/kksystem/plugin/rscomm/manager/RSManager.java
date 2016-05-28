@@ -17,19 +17,22 @@ import kkdev.kksystem.plugin.rscomm.configuration.ServicesConfig;
 public class RSManager extends PluginManagerBase {
 
     private IRSAdapter Adapter;
-
+    KKPlugin LocalConnector;
 
     public void Init(KKPlugin Conn) {
         this.Connector = Conn;
+        LocalConnector = Conn;
         //Init Adapters and start scan and connect
-        this.CurrentFeature.put(SystemConsts.KK_BASE_UICONTEXT_DEFAULT,PluginSettings.MainConfiguration.FeatureID);
+        this.CurrentFeature.put(SystemConsts.KK_BASE_UICONTEXT_DEFAULT, PluginSettings.MainConfiguration.FeatureID);
         //
         ConfigAndInitHW();
         //
     }
+
     public void Start() {
-        Adapter.StartAdapter(this);
+        Adapter.StartAdapter(LocalConnector.GetUtils(), this);
     }
+
     private void ConfigAndInitHW() {
         //Init HW adapter
         if (PluginSettings.MainConfiguration.BTAdapter == RSConfig.AdapterTypes.jsscRS232) {
@@ -42,27 +45,24 @@ public class RSManager extends PluginManagerBase {
             //Adapter.StartAdapter(this);
         }
     }
-    
-   
-    
-    
-    public void RS_ReceiveData(String Tag, String Data)
-    {
+
+    public void RS_ReceiveData(String Tag, String Data) {
         PinBaseDataTaggedObj ObjDat;
-        ObjDat=new PinBaseDataTaggedObj();
-        ObjDat.DataType=PinBaseData.BASE_DATA_TYPE.TAGGED_OBJ;
-        ObjDat.Tag=Tag;
-        ObjDat.Value=Data;
-        
-        this.BASE_SendPluginMessage(SystemConsts.KK_BASE_FEATURES_SYSTEM_MULTIFEATURE_UID,PluginConsts.KK_PLUGIN_BASE_BASIC_TAGGEDOBJ_DATA,ObjDat);
+        ObjDat = new PinBaseDataTaggedObj();
+        ObjDat.DataType = PinBaseData.BASE_DATA_TYPE.TAGGED_OBJ;
+        ObjDat.Tag = Tag;
+        ObjDat.Value = Data;
+
+        this.BASE_SendPluginMessage(SystemConsts.KK_BASE_FEATURES_SYSTEM_MULTIFEATURE_UID, PluginConsts.KK_PLUGIN_BASE_BASIC_TAGGEDOBJ_DATA, ObjDat);
     }
-    
+
     public void ReceivePIN(PluginMessage Msg) {
         if (Msg.PinName.equals(KK_PLUGIN_BASE_BASIC_TAGGEDOBJ_DATA)) {
             PinBaseDataTaggedObj PIN = (PinBaseDataTaggedObj) Msg.PinData;
             //
-            if (!PIN.Tag.equals("SMARTHEAD"))
+            if (!PIN.Tag.equals("SMARTHEAD")) {
                 return;
+            }
             //
             Adapter.SendStringData(PIN.Tag, (String) PIN.Value);
         }

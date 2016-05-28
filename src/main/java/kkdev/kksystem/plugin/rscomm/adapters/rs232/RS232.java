@@ -16,6 +16,7 @@ import jssc.SerialPortEventListener;
 import jssc.SerialPortException;
 import kkdev.kksystem.base.classes.kkcontroller.KKController_Utils;
 import kkdev.kksystem.base.classes.kkcontroller.KKController_Utils.RS232Device;
+import kkdev.kksystem.base.interfaces.IKKControllerUtils;
 import kkdev.kksystem.plugin.rscomm.manager.RSManager;
 import kkdev.kksystem.plugin.rscomm.adapters.IRSAdapter;
 import kkdev.kksystem.plugin.rscomm.services.IBTService;
@@ -69,20 +70,20 @@ public class RS232 implements IRSAdapter {
     }
 
     @Override
-    public void StartAdapter(RSManager RTM) {
-        String DevAddr="AUTO";
-        if (HWPort.equals("AUTO"))
-        for (RS232Device DV: RTM.BaseConnector.SystemUtilities().HWDEVICES_GetRS232Devices())
-        {
-            if (DV.PortType==KKController_Utils.RS232DevType.DevSmarthead)
-            {
-                DevAddr=DV.PortName;
-                break;
+    public void StartAdapter(IKKControllerUtils Utils,RSManager RTM) {
+        String DevAddr = "AUTO";
+        if (HWPort.equals("AUTO")) {
+            List<RS232Device> Devices = Utils.HWDEVICES_GetRS232Devices();
+            if (Devices != null) {
+                for (RS232Device DV : Devices) {
+                    if (DV.PortType == KKController_Utils.RS232DevType.DevSmarthead) {
+                        DevAddr = DV.PortName;
+                        break;
+                    }
+                }
             }
-        }
-        else
-        {
-            DevAddr=HWPort;
+        } else {
+            DevAddr = HWPort;
         }
         
         

@@ -5,6 +5,7 @@
  */
 package kkdev.kksystem.plugin.rscomm.adapters;
 
+import kkdev.kksystem.base.interfaces.IKKControllerUtils;
 import kkdev.kksystem.plugin.rscomm.configuration.ServicesConfig;
 import kkdev.kksystem.plugin.rscomm.manager.RSManager;
 
@@ -16,7 +17,7 @@ import kkdev.kksystem.plugin.rscomm.manager.RSManager;
  * @author blinov_is
  */
 public interface IRSAdapter {
-    public void StartAdapter(RSManager RTM);
+    public void StartAdapter(IKKControllerUtils Utils,RSManager RTM);
     public void StopAdaper();
     public boolean State();
     public void RegisterService(ServicesConfig SC);
