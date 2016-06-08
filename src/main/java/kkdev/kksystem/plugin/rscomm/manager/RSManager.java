@@ -20,10 +20,10 @@ public class RSManager extends PluginManagerBase {
     KKPlugin LocalConnector;
 
     public void Init(KKPlugin Conn) {
-        this.Connector = Conn;
+        this.connector = Conn;
         LocalConnector = Conn;
         //Init Adapters and start scan and connect
-        this.CurrentFeature.put(SystemConsts.KK_BASE_UICONTEXT_DEFAULT, PluginSettings.MainConfiguration.FeatureID);
+        this.currentFeature.put(SystemConsts.KK_BASE_UICONTEXT_DEFAULT, PluginSettings.MainConfiguration.FeatureID);
         //
         ConfigAndInitHW();
         //
@@ -49,9 +49,9 @@ public class RSManager extends PluginManagerBase {
     public void RS_ReceiveData(String Tag, String Data) {
         PinBaseDataTaggedObj ObjDat;
         ObjDat = new PinBaseDataTaggedObj();
-        ObjDat.DataType = PinBaseData.BASE_DATA_TYPE.TAGGED_OBJ;
-        ObjDat.Tag = Tag;
-        ObjDat.Value = Data;
+        ObjDat.dataType = PinBaseData.BASE_DATA_TYPE.TAGGED_OBJ;
+        ObjDat.tag = Tag;
+        ObjDat.value = Data;
 
         this.BASE_SendPluginMessage(SystemConsts.KK_BASE_FEATURES_SYSTEM_MULTIFEATURE_UID, PluginConsts.KK_PLUGIN_BASE_BASIC_TAGGEDOBJ_DATA, ObjDat);
     }
@@ -60,11 +60,11 @@ public class RSManager extends PluginManagerBase {
         if (Msg.PinName.equals(KK_PLUGIN_BASE_BASIC_TAGGEDOBJ_DATA)) {
             PinBaseDataTaggedObj PIN = (PinBaseDataTaggedObj) Msg.PinData;
             //
-            if (!PIN.Tag.equals("SMARTHEAD")) {
+            if (!PIN.tag.equals("SMARTHEAD")) {
                 return;
             }
             //
-            Adapter.SendStringData(PIN.Tag, (String) PIN.Value);
+            Adapter.SendStringData(PIN.tag, (String) PIN.value);
         }
     }
 

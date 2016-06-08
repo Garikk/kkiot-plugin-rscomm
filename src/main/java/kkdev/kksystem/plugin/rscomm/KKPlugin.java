@@ -9,8 +9,6 @@ import kkdev.kksystem.base.classes.plugins.PluginMessage;
 import kkdev.kksystem.base.classes.plugins.simple.KKPluginBase;
 import kkdev.kksystem.base.interfaces.IKKControllerUtils;
 import kkdev.kksystem.base.interfaces.IPluginBaseInterface;
-import kkdev.kksystem.plugin.rscomm.RSPluginInfo;
-import kkdev.kksystem.plugin.rscomm.Global;
 import kkdev.kksystem.plugin.rscomm.configuration.PluginSettings;
 import kkdev.kksystem.plugin.rscomm.manager.RSManager;
 
@@ -27,25 +25,25 @@ public final class KKPlugin extends KKPluginBase {
     }
 
     @Override
-    public void PluginInit(IPluginBaseInterface BaseConnector, String GlobalConfUID) {
-        super.PluginInit(BaseConnector, GlobalConfUID);
-        Utils=BaseConnector.SystemUtilities();
-        PluginSettings.InitConfig(this.GlobalConfID, this.PluginInfo.GetPluginInfo().PluginUUID);
+    public void pluginInit(IPluginBaseInterface BaseConnector, String GlobalConfUID) {
+        super.pluginInit(BaseConnector, GlobalConfUID);
+        Utils=BaseConnector.systemUtilities();
+        PluginSettings.InitConfig(this.globalConfID, this.pluginInfo.getPluginInfo().PluginUUID);
         Global.PM.Init(this);
     }
 
     
     @Override
-    public PluginMessage ExecutePin(PluginMessage Pin) {
-        super.ExecutePin(Pin);
+    public PluginMessage executePin(PluginMessage Pin) {
+        super.executePin(Pin);
         Global.PM.ReceivePIN(Pin);
         return null;
     }
     
     
      @Override
-    public void PluginStart() {
-         super.PluginStart();
+    public void pluginStart() {
+         super.pluginStart();
          Global.PM.Start();
     }
 
