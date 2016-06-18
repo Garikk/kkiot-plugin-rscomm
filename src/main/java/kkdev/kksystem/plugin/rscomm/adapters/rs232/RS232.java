@@ -86,7 +86,7 @@ public class RS232 implements IRSAdapter {
             DevAddr = HWPort;
         }
         
-        
+        DevAddr="/dev/ttyACM0";
         if (DevAddr.equals("AUTO"))
         {
                System.out.println("[RSCOMM][ERR] Adapter RS-232 not found, Disabled");
