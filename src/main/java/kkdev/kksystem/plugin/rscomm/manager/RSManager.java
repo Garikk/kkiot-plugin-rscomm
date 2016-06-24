@@ -1,7 +1,7 @@
 package kkdev.kksystem.plugin.rscomm.manager;
 
-import kkdev.kksystem.base.classes.base.PinBaseData;
-import kkdev.kksystem.base.classes.base.PinBaseDataTaggedObj;
+
+import kkdev.kksystem.base.classes.base.PinDataTaggedString;
 import kkdev.kksystem.base.classes.plugins.PluginMessage;
 import kkdev.kksystem.base.classes.plugins.simple.managers.PluginManagerBase;
 import kkdev.kksystem.base.constants.PluginConsts;
@@ -47,18 +47,17 @@ public class RSManager extends PluginManagerBase {
     }
 
     public void RS_ReceiveData(String Tag, String Data) {
-        PinBaseDataTaggedObj ObjDat;
-        ObjDat = new PinBaseDataTaggedObj();
-        ObjDat.dataType = PinBaseData.BASE_DATA_TYPE.TAGGED_OBJ;
+        PinDataTaggedString ObjDat;
+        ObjDat = new PinDataTaggedString();
         ObjDat.tag = Tag;
         ObjDat.value = Data;
 
-        this.BASE_SendPluginMessage(SystemConsts.KK_BASE_FEATURES_SYSTEM_MULTIFEATURE_UID, PluginConsts.KK_PLUGIN_BASE_BASIC_TAGGEDOBJ_DATA, ObjDat);
+        this.BASE_SendPluginMessage(SystemConsts.KK_BASE_FEATURES_SYSTEM_MULTIFEATURE_UID,SystemConsts.KK_BASE_UICONTEXT_DEFAULT, PluginConsts.KK_PLUGIN_BASE_BASIC_TAGGEDOBJ_DATA, ObjDat);
     }
 
     public void ReceivePIN(PluginMessage Msg) {
-        if (Msg.PinName.equals(KK_PLUGIN_BASE_BASIC_TAGGEDOBJ_DATA)) {
-            PinBaseDataTaggedObj PIN = (PinBaseDataTaggedObj) Msg.PinData;
+        if (Msg.pinName.equals(KK_PLUGIN_BASE_BASIC_TAGGEDOBJ_DATA)) {
+            PinDataTaggedString PIN = (PinDataTaggedString) Msg.getPinData();
             //
             if (!PIN.tag.equals("SMARTHEAD")) {
                 return;
