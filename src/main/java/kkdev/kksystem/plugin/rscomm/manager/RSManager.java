@@ -20,7 +20,7 @@ public class RSManager extends PluginManagerBase {
     KKPlugin LocalConnector;
 
     public void Init(KKPlugin Conn) {
-        this.connector = Conn;
+        setPluginConnector(Conn);
         LocalConnector = Conn;
         //Init Adapters and start scan and connect
         this.currentFeature.put(SystemConsts.KK_BASE_UICONTEXT_DEFAULT, PluginSettings.MainConfiguration.FeatureID);
