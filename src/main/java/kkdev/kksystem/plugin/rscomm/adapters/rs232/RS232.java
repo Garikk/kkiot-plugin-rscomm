@@ -176,7 +176,7 @@ public class RS232 implements IRSAdapter {
                             message = "";
                         } else if (!S.equals("\n")) {
                             message += S;
-                          }
+                           }
                     }
 
 
