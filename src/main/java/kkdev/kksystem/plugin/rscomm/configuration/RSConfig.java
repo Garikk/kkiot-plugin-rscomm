@@ -5,14 +5,14 @@
  */
 package kkdev.kksystem.plugin.rscomm.configuration;
 
-import kkdev.kksystem.base.classes.plugins.ExternalConfiguration;
+import kkdev.kksystem.base.classes.plugins.PluginConfiguration;
 import kkdev.kksystem.base.constants.SystemConsts;
 
 /**
  *
  * @author blinov_is
  */
-public class RSConfig  extends ExternalConfiguration {
+public class RSConfig  extends PluginConfiguration {
     public enum AdapterTypes {
         jsscRS232
     }
