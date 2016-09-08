@@ -15,11 +15,11 @@ import jssc.SerialPortEvent;
 import jssc.SerialPortEventListener;
 import jssc.SerialPortException;
 import kkdev.kksystem.base.classes.kkcontroller.RS232Device;
-import kkdev.kksystem.base.interfaces.IKKControllerUtils;
 import kkdev.kksystem.plugin.rscomm.manager.RSManager;
 import kkdev.kksystem.plugin.rscomm.adapters.IRSAdapter;
 import kkdev.kksystem.plugin.rscomm.services.IBTService;
 import kkdev.kksystem.plugin.rscomm.configuration.ServicesConfig;
+import kkdev.kksystem.base.interfaces.IControllerUtils;
 
 /**
  *
@@ -69,7 +69,7 @@ public class RS232 implements IRSAdapter {
     }
 
     @Override
-    public void StartAdapter(IKKControllerUtils Utils,RSManager RTM) {
+    public void StartAdapter(IControllerUtils Utils,RSManager RTM) {
         String DevAddr = "AUTO";
         if (HWPort.equals("AUTO")) {
             List<RS232Device> Devices = Utils.HWDEVICES_GetRS232Devices();

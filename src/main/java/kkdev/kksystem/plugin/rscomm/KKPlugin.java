@@ -7,10 +7,10 @@ package kkdev.kksystem.plugin.rscomm;
  */
 import kkdev.kksystem.base.classes.plugins.PluginMessage;
 import kkdev.kksystem.base.classes.plugins.simple.KKPluginBase;
-import kkdev.kksystem.base.interfaces.IKKControllerUtils;
-import kkdev.kksystem.base.interfaces.IPluginBaseInterface;
 import kkdev.kksystem.plugin.rscomm.configuration.PluginSettings;
 import kkdev.kksystem.plugin.rscomm.manager.RSManager;
+import kkdev.kksystem.base.interfaces.IPluginBaseConnection;
+import kkdev.kksystem.base.interfaces.IControllerUtils;
 
 
 /**
@@ -18,14 +18,14 @@ import kkdev.kksystem.plugin.rscomm.manager.RSManager;
  * @author blinov_is
  */
 public final class KKPlugin extends KKPluginBase {
-    IKKControllerUtils Utils;
+    IControllerUtils Utils;
     public KKPlugin() {
         super(new RSPluginInfo());
         Global.PM=new RSManager();
     }
 
     @Override
-    public void pluginInit(IPluginBaseInterface BaseConnector, String GlobalConfUID) {
+    public void pluginInit(IPluginBaseConnection BaseConnector, String GlobalConfUID) {
         super.pluginInit(BaseConnector, GlobalConfUID);
         Utils=BaseConnector.systemUtilities();
         PluginSettings.InitConfig(this.globalConfID, this.pluginInfo.getPluginInfo().PluginUUID);
@@ -46,7 +46,7 @@ public final class KKPlugin extends KKPluginBase {
          Global.PM.Start();
     }
 
-    public IKKControllerUtils GetUtils()
+    public IControllerUtils GetUtils()
     {
         return Utils;
     }
