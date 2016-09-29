@@ -72,7 +72,7 @@ public class RS232 implements IRSAdapter {
     public void StartAdapter(IControllerUtils Utils,RSManager RTM) {
         String DevAddr = "AUTO";
         if (HWPort.equals("AUTO")) {
-            List<RS232Device> Devices = Utils.HWManager().GetRS232Devices();
+            List<RS232Device> Devices = Utils.HWManager().getRS232Devices();
             if (Devices != null) {
                 for (RS232Device DV : Devices) {
                     if (DV.PortType == RS232Device.RS232DevType.DevSmarthead) {
