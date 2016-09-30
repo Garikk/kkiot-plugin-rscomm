@@ -5,6 +5,7 @@ package kkdev.kksystem.plugin.rscomm;
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
+import kkdev.kksystem.base.classes.plugins.PluginConfiguration;
 import kkdev.kksystem.base.classes.plugins.PluginMessage;
 import kkdev.kksystem.base.classes.plugins.simple.KKPluginBase;
 import kkdev.kksystem.plugin.rscomm.configuration.PluginSettings;
@@ -49,5 +50,9 @@ public final class KKPlugin extends KKPluginBase {
     public IControllerUtils GetUtils()
     {
         return Utils;
+    }
+     @Override
+    public PluginConfiguration getPluginSettings() {
+       return PluginSettings.MainConfiguration;
     }
 }
