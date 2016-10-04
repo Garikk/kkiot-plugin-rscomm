@@ -10,8 +10,8 @@ import kkdev.kksystem.base.classes.plugins.PluginMessage;
 import kkdev.kksystem.base.classes.plugins.simple.KKPluginBase;
 import kkdev.kksystem.plugin.rscomm.configuration.PluginSettings;
 import kkdev.kksystem.plugin.rscomm.manager.RSManager;
-import kkdev.kksystem.base.interfaces.IPluginBaseConnection;
 import kkdev.kksystem.base.interfaces.IControllerUtils;
+import kkdev.kksystem.base.interfaces.IBaseConnection;
 
 
 /**
@@ -26,7 +26,7 @@ public final class KKPlugin extends KKPluginBase {
     }
 
     @Override
-    public void pluginInit(IPluginBaseConnection BaseConnector, String GlobalConfUID) {
+    public void pluginInit(IBaseConnection BaseConnector, String GlobalConfUID) {
         super.pluginInit(BaseConnector, GlobalConfUID);
         Utils=BaseConnector.systemUtilities();
         PluginSettings.InitConfig(this.globalConfID, this.pluginInfo.getPluginInfo().PluginUUID);
