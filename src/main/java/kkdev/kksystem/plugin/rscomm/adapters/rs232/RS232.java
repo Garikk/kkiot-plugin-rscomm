@@ -85,7 +85,7 @@ public class RS232 implements IRSAdapter {
             DevAddr = HWPort;
         }
         
-        DevAddr="/dev/ttyACM0";
+        //DevAddr="/dev/ttyACM0";
         if (DevAddr.equals("AUTO"))
         {
                System.out.println("[RSCOMM][ERR] Adapter RS-232 not found, Disabled");
@@ -102,8 +102,8 @@ public class RS232 implements IRSAdapter {
                     SerialPort.DATABITS_8,
                     SerialPort.STOPBITS_1,
                     SerialPort.PARITY_NONE);
-            serialPort.setFlowControlMode(SerialPort.FLOWCONTROL_RTSCTS_IN
-                    | SerialPort.FLOWCONTROL_RTSCTS_OUT);
+           // serialPort.setFlowControlMode(SerialPort.FLOWCONTROL_RTSCTS_IN
+//                    | SerialPort.FLOWCONTROL_RTSCTS_OUT);
             State = true;
         } catch (SerialPortException ex) {
             System.out.println("[RSCOMM][ERR] Adapter RS-232 not found, Disabled");
@@ -146,6 +146,7 @@ public class RS232 implements IRSAdapter {
             return;
         }
         try {
+          //   System.out.println("[RSCOMM][DBG]  " +Data);
             serialPort.writeString(Data);
             serialPort.writeString("\r\n");
         } catch (SerialPortException ex) {
