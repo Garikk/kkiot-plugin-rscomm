@@ -146,7 +146,6 @@ public class RS232 implements IRSAdapter {
             return;
         }
         try {
-          //   System.out.println("[RSCOMM][DBG]  " +Data);
             serialPort.writeString(Data);
             serialPort.writeString("\r\n");
         } catch (SerialPortException ex) {
