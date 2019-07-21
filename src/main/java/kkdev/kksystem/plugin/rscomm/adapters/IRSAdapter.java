@@ -17,10 +17,10 @@ import kkdev.kksystem.base.interfaces.IControllerUtils;
  * @author blinov_is
  */
 public interface IRSAdapter {
-    public void StartAdapter(IControllerUtils Utils,RSManager RTM);
-    public void StopAdaper();
-    public boolean State();
-    public void RegisterService(ServicesConfig SC);
-    public void SendJsonData(String ServiceTag,String Json);
-    public void SendStringData(String ServiceTag,String Вфеф);
+    void StartAdapter(IControllerUtils Utils, RSManager RTM);
+    void StopAdaper();
+    boolean State();
+    void RegisterService(ServicesConfig SC);
+    void SendJsonData(String ServiceTag, String Json);
+    void SendStringData(String ServiceTag, String Вфеф);
 }

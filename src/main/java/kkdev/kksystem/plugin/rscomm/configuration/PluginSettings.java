@@ -14,25 +14,24 @@ import kkdev.kksystem.base.classes.plugins.simple.SettingsManager;
 public abstract class PluginSettings {
 
    public static  String RS_CONF;
-   private static SettingsManager Settings;
 
-   public String FeatureID;
+    public String FeatureID;
    
     public static RSConfig MainConfiguration;
 
     public static void InitConfig(String GlobalConfigUID, String MyUID) {
          RS_CONF=GlobalConfigUID+"_"+MyUID + ".json";
-        
-        Settings=new SettingsManager(RS_CONF,RSConfig.class);
+
+        SettingsManager settings = new SettingsManager(RS_CONF, RSConfig.class);
         
         
        // System.out.println("[BT][CONFIG] Load configuration");
-        MainConfiguration=(RSConfig)Settings.loadConfig();
+        MainConfiguration=(RSConfig) settings.loadConfig();
 
         if (MainConfiguration == null) {
             System.out.println("[RSC][CONFIG] Error Load configuration, try create default config");
-            Settings.saveConfig(kk_DefaultConfig.MakeDefaultConfig());
-            MainConfiguration=(RSConfig)Settings.loadConfig();
+            settings.saveConfig(kk_DefaultConfig.MakeDefaultConfig());
+            MainConfiguration=(RSConfig) settings.loadConfig();
         }
         if (MainConfiguration == null) {
             System.out.println("[RSC][CONFIG] Load configuration, fatal");

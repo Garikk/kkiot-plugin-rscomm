@@ -10,7 +10,7 @@ package kkdev.kksystem.plugin.rscomm.services;
  * @author sayma_000
  */
 public interface IBTService {
-    public void ConnectService(String Tag,String Addr);
-    public void StopService();
+    void ConnectService(String Tag, String Addr);
+    void StopService();
    
 }

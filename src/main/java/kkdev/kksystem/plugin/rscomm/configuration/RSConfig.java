@@ -6,7 +6,6 @@
 package kkdev.kksystem.plugin.rscomm.configuration;
 
 import kkdev.kksystem.base.classes.plugins.PluginConfiguration;
-import kkdev.kksystem.base.constants.SystemConsts;
 
 /**
  *
