@@ -20,6 +20,7 @@ import kkdev.kksystem.plugin.rscomm.adapters.IRSAdapter;
 import kkdev.kksystem.plugin.rscomm.services.IBTService;
 import kkdev.kksystem.plugin.rscomm.configuration.ServicesConfig;
 import kkdev.kksystem.base.interfaces.IControllerUtils;
+import org.apache.logging.log4j.LogManager;
 
 /**
  *
@@ -27,8 +28,9 @@ import kkdev.kksystem.base.interfaces.IControllerUtils;
  */
 public class RS232 implements IRSAdapter {
 
+    private static final org.apache.logging.log4j.Logger logger = LogManager.getLogger("RSCOMM_RS232");
     String HWPort;
-    
+
     private static SerialPort serialPort;
 
     private boolean State = false;
@@ -38,16 +40,14 @@ public class RS232 implements IRSAdapter {
     private HashMap<String, IBTService> BTServices;
     RSManager BTM;
 
-    public RS232(RSManager RS, String Port)
-    {
-        BTM=RS;
-        HWPort=Port;
+    public RS232(RSManager RS, String Port) {
+        BTM = RS;
+        HWPort = Port;
     }
-   
-    
+
     @Override
     public void RegisterService(ServicesConfig SC) {
-        
+
         if (ServicesMapping == null) {
             ServicesMapping = new ArrayList<>();
         }
@@ -56,11 +56,9 @@ public class RS232 implements IRSAdapter {
     }
 
     private void InitServices() {
-
-     //   for (ServicesConfig SC : ServicesMapping) {
-     //       System.out.println("[BT][INF] Check services " + SC.Name);
-
-      //  }
+        //   for (ServicesConfig SC : ServicesMapping) {
+        //       System.out.println("[BT][INF] Check services " + SC.Name);
+        //  }
     }
 
     @Override
@@ -69,7 +67,7 @@ public class RS232 implements IRSAdapter {
     }
 
     @Override
-    public void StartAdapter(IControllerUtils Utils,RSManager RTM) {
+    public void StartAdapter(IControllerUtils Utils, RSManager RTM) {
         String DevAddr = "AUTO";
         if (HWPort.equals("AUTO")) {
             List<RS232Device> Devices = Utils.HWManager().getRS232Devices();
@@ -84,16 +82,14 @@ public class RS232 implements IRSAdapter {
         } else {
             DevAddr = HWPort;
         }
-        
+
         //DevAddr="/dev/ttyACM0";
-        if (DevAddr.equals("AUTO"))
-        {
-               System.out.println("[RSCOMM][ERR] Adapter RS-232 not found, Disabled");
-              State = false;
-              return;
+        if (DevAddr.equals("AUTO")) {
+            logger.error("Adapter RS-232 not found, Disabled");
+            State = false;
+            return;
         }
-            
-        
+
         serialPort = new SerialPort(DevAddr);
 
         try {
@@ -102,21 +98,21 @@ public class RS232 implements IRSAdapter {
                     SerialPort.DATABITS_8,
                     SerialPort.STOPBITS_1,
                     SerialPort.PARITY_NONE);
-           // serialPort.setFlowControlMode(SerialPort.FLOWCONTROL_RTSCTS_IN
+            // serialPort.setFlowControlMode(SerialPort.FLOWCONTROL_RTSCTS_IN
 //                    | SerialPort.FLOWCONTROL_RTSCTS_OUT);
             State = true;
         } catch (SerialPortException ex) {
-            System.out.println("[RSCOMM][ERR] Adapter RS-232 not found, Disabled");
-              State = false;
-              return;
+            logger.error("RS232 internal error " + ex.toString());
+            State = false;
+            return;
         }
 
         try {
             serialPort.addEventListener(new PortReader(), SerialPort.MASK_RXCHAR);
             State = true;
         } catch (SerialPortException ex) {
-            Logger.getLogger(RS232.class.getName()).log(Level.SEVERE, null, ex);
-               State = false;
+            logger.error("RS232 internal error " + ex.toString());
+            State = false;
         }
 
     }
@@ -135,8 +131,8 @@ public class RS232 implements IRSAdapter {
         try {
             serialPort.writeString(Json);
         } catch (SerialPortException ex) {
-            Logger.getLogger(RS232.class.getName()).log(Level.SEVERE, null, ex);
-             State=false;
+            logger.error("RS232 internal error " + ex.toString());
+            State = false;
         }
     }
 
@@ -149,16 +145,17 @@ public class RS232 implements IRSAdapter {
             serialPort.writeString(Data);
             serialPort.writeString("\r\n");
         } catch (SerialPortException ex) {
-            Logger.getLogger(RS232.class.getName()).log(Level.SEVERE, null, ex);
-            State=false;
+            logger.error("RS232 internal error " + ex.toString());
+            State = false;
         }
     }
 
     private class PortReader implements SerialPortEventListener {
+
         private String message;
-        PortReader()
-        {
-            message="";
+
+        PortReader() {
+            message = "";
         }
 
         public void serialEvent(SerialPortEvent event) {
@@ -170,18 +167,15 @@ public class RS232 implements IRSAdapter {
                     for (int i = 0; i < buffer.length(); i++) {
                         S = buffer.substring(i, i + 1);
                         if (S.equals("\r")) {
-                             BTM.RS_ReceiveData("SMARTHEAD", message);
+                            BTM.RS_ReceiveData("SMARTHEAD", message);
                             message = "";
                         } else if (!S.equals("\n")) {
                             message += S;
-                           }
+                        }
                     }
 
-
-                    
-
                 } catch (SerialPortException ex) {
-                    System.out.println(ex);
+                    logger.error("RS232 internal error " + ex.toString());
                 }
             }
         }

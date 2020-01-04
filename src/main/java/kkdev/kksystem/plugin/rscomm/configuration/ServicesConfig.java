@@ -20,5 +20,7 @@ public class ServicesConfig {
     public String DevAddr;
     public RS_ServiceType DevType;
     public String KK_TargetTag;
+    public Boolean Mirroring;
+    public String Mirroring_Target;
 
 }
