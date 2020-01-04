@@ -5,6 +5,7 @@
  */
 package kkdev.kksystem.plugin.rscomm.configuration;
 
+import java.util.List;
 import kkdev.kksystem.base.classes.plugins.PluginConfiguration;
 
 /**
@@ -17,7 +18,7 @@ public class RSConfig  extends PluginConfiguration {
     }
     
     public String FeatureID;
-    public AdapterTypes BTAdapter;
-    public ServicesConfig[] RSServicesMapping;
-
+    public AdapterTypes BTAdapterType;
+    public String HWAddr;
+    public List<String> ServiceTags;
 }

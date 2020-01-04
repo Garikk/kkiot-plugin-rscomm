@@ -5,6 +5,8 @@
  */
 package kkdev.kksystem.plugin.rscomm.configuration;
 
+import java.util.ArrayList;
+
 
 /**
  *
@@ -17,14 +19,11 @@ public abstract class kk_DefaultConfig {
         
         RSConfig DefConf = new RSConfig();
         
-        DefConf.BTAdapter=RSConfig.AdapterTypes.jsscRS232;
-        // 
-        DefConf.RSServicesMapping=new ServicesConfig[1];
-        DefConf.RSServicesMapping[0]=new ServicesConfig();
-        DefConf.RSServicesMapping[0].DevType=ServicesConfig.RS_ServiceType.RS232Port;
-        DefConf.RSServicesMapping[0].KK_TargetTag="SMARTHEAD";
-        DefConf.RSServicesMapping[0].DevAddr="AUTO";//"//dev//ttyACM0"; //change this! (this is my test adapter
-        DefConf.RSServicesMapping[0].Name="SMARTHEAD";
+        DefConf.BTAdapterType=RSConfig.AdapterTypes.jsscRS232;
+        DefConf.HWAddr="AUTO";
+        DefConf.ServiceTags = new ArrayList();
+        DefConf.ServiceTags.add("SMARTHEAD");
+
         return DefConf;
     }
 }

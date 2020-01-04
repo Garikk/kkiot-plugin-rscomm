@@ -8,8 +8,6 @@ package kkdev.kksystem.plugin.rscomm.adapters.rs232;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 import jssc.SerialPort;
 import jssc.SerialPortEvent;
 import jssc.SerialPortEventListener;
@@ -17,8 +15,6 @@ import jssc.SerialPortException;
 import kkdev.kksystem.base.classes.kkcontroller.RS232Device;
 import kkdev.kksystem.plugin.rscomm.manager.RSManager;
 import kkdev.kksystem.plugin.rscomm.adapters.IRSAdapter;
-import kkdev.kksystem.plugin.rscomm.services.IBTService;
-import kkdev.kksystem.plugin.rscomm.configuration.ServicesConfig;
 import kkdev.kksystem.base.interfaces.IControllerUtils;
 import org.apache.logging.log4j.LogManager;
 
@@ -36,29 +32,11 @@ public class RS232 implements IRSAdapter {
     private boolean State = false;
     private List<Thread> BTServer;
 
-    private List<ServicesConfig> ServicesMapping;
-    private HashMap<String, IBTService> BTServices;
     RSManager BTM;
 
     public RS232(RSManager RS, String Port) {
         BTM = RS;
         HWPort = Port;
-    }
-
-    @Override
-    public void RegisterService(ServicesConfig SC) {
-
-        if (ServicesMapping == null) {
-            ServicesMapping = new ArrayList<>();
-        }
-
-        ServicesMapping.add(SC);
-    }
-
-    private void InitServices() {
-        //   for (ServicesConfig SC : ServicesMapping) {
-        //       System.out.println("[BT][INF] Check services " + SC.Name);
-        //  }
     }
 
     @Override
@@ -75,6 +53,7 @@ public class RS232 implements IRSAdapter {
                 for (RS232Device DV : Devices) {
                     if (DV.PortType == RS232Device.RS232DevType.DevSmarthead) {
                         DevAddr = DV.PortName;
+                        //TODO: Not support multismartheads!
                         break;
                     }
                 }

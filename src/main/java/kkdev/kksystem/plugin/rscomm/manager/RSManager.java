@@ -1,6 +1,5 @@
 package kkdev.kksystem.plugin.rscomm.manager;
 
-
 import kkdev.kksystem.base.classes.base.PinDataTaggedString;
 import kkdev.kksystem.base.classes.plugins.PluginMessage;
 import kkdev.kksystem.base.classes.plugins.simple.managers.PluginManagerBase;
@@ -12,7 +11,6 @@ import kkdev.kksystem.plugin.rscomm.KKPlugin;
 import kkdev.kksystem.plugin.rscomm.adapters.IRSAdapter;
 import kkdev.kksystem.plugin.rscomm.adapters.rs232.RS232;
 import kkdev.kksystem.plugin.rscomm.configuration.RSConfig;
-import kkdev.kksystem.plugin.rscomm.configuration.ServicesConfig;
 
 public class RSManager extends PluginManagerBase {
 
@@ -35,14 +33,9 @@ public class RSManager extends PluginManagerBase {
 
     private void ConfigAndInitHW() {
         //Init HW adapter
-        if (PluginSettings.MainConfiguration.BTAdapter == RSConfig.AdapterTypes.jsscRS232) {
+        if (PluginSettings.MainConfiguration.BTAdapterType == RSConfig.AdapterTypes.jsscRS232) {
             //TODO TEMPORARY!!!
-            Adapter = new RS232(this, PluginSettings.MainConfiguration.RSServicesMapping[0].DevAddr);
-            //Set up services
-            for (ServicesConfig SVC : PluginSettings.MainConfiguration.RSServicesMapping) {
-                Adapter.RegisterService(SVC);
-            }
-            //Adapter.StartAdapter(this);
+            Adapter = new RS232(this, PluginSettings.MainConfiguration.HWAddr);
         }
     }
 
@@ -52,19 +45,18 @@ public class RSManager extends PluginManagerBase {
         ObjDat.tag = Tag;
         ObjDat.value = Data;
 
-        this.BASE_SendPluginMessage(SystemConsts.KK_BASE_FEATURES_SYSTEM_MULTIFEATURE_UID,SystemConsts.KK_BASE_UICONTEXT_DEFAULT, PluginConsts.KK_PLUGIN_BASE_BASIC_TAGGEDOBJ_DATA, ObjDat);
+        this.BASE_SendPluginMessage(SystemConsts.KK_BASE_FEATURES_SYSTEM_MULTIFEATURE_UID, SystemConsts.KK_BASE_UICONTEXT_DEFAULT, PluginConsts.KK_PLUGIN_BASE_BASIC_TAGGEDOBJ_DATA, ObjDat);
     }
 
     public void ReceivePIN(PluginMessage Msg) {
         if (Msg.pinName.equals(KK_PLUGIN_BASE_BASIC_TAGGEDOBJ_DATA)) {
             PinDataTaggedString PIN = (PinDataTaggedString) Msg.getPinData();
             //
-            if (!PIN.tag.equals("SMARTHEAD")) {
+            if (!PluginSettings.MainConfiguration.ServiceTags.contains(PIN.tag)) {
                 return;
             }
             //
             Adapter.SendStringData(PIN.tag, (String) PIN.value);
         }
     }
-
 }

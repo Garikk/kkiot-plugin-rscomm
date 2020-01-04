@@ -20,7 +20,6 @@ public interface IRSAdapter {
     void StartAdapter(IControllerUtils Utils, RSManager RTM);
     void StopAdaper();
     boolean State();
-    void RegisterService(ServicesConfig SC);
     void SendJsonData(String ServiceTag, String Json);
-    void SendStringData(String ServiceTag, String Вфеф);
+    void SendStringData(String ServiceTag, String Data);
 }
